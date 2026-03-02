@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compupamm — Seguridad & Tecnología</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --white: #ffffff;
+    --bg: #fbfbfd;
+    --dark: #1d1d1f;
+    --mid: #424245;
+    --muted: #86868b;
+    --light: #f5f5f7;
+    --border: #d2d2d7;
+    --blue: #0071e3;
+    --blue-hover: #0077ed;
+    --green: #25D366;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--white); color: var(--dark); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 52px; background: rgba(255,255,255,0.82); backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: center; }
+  .nav-inner { width: 100%; max-width: 1200px; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; }
+  .logo { font-size: 1.1rem; font-weight: 600; color: var(--dark); text-decoration: none; letter-spacing: -0.3px; }
+  nav ul { list-style: none; display: flex; gap: 2rem; align-items: center; }
+  nav ul a { color: var(--mid); text-decoration: none; font-size: 0.82rem; font-weight: 400; transition: color 0.2s; }
+  nav ul a:hover { color: var(--dark); }
+  .nav-btn { background: var(--blue); color: #fff !important; padding: 0.45rem 1.1rem; border-radius: 20px; font-weight: 500 !important; font-size: 0.82rem !important; transition: background 0.2s !important; }
+  .nav-btn:hover { background: var(--blue-hover) !important; }
+  #hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 8rem 2rem 5rem; background: var(--white); position: relative; overflow: hidden; }
+  #hero::before { content: ''; position: absolute; top: -20%; left: 50%; transform: translateX(-50%); width: 900px; height: 900px; background: radial-gradient(circle, rgba(0,113,227,0.06) 0%, transparent 65%); pointer-events: none; }
+  .hero-eyebrow { font-size: 0.8rem; font-weight: 500; color: var(--blue); letter-spacing: 0.04em; margin-bottom: 1.2rem; opacity: 0; animation: fadeUp 0.8s 0.1s ease forwards; }
+  .hero-title { font-size: clamp(3rem, 7vw, 6.5rem); font-weight: 700; letter-spacing: -0.04em; line-height: 1.05; color: var(--dark); margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s 0.25s ease forwards; }
+  .hero-title span { color: var(--blue); }
+  .hero-sub { font-size: clamp(1rem, 2vw, 1.35rem); font-weight: 300; color: var(--mid); max-width: 620px; line-height: 1.7; margin-bottom: 3rem; opacity: 0; animation: fadeUp 0.8s 0.4s ease forwards; }
+  .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s 0.55s ease forwards; }
+  .btn-blue { background: var(--blue); color: #fff; padding: 0.85rem 2.2rem; border-radius: 30px; font-size: 0.95rem; font-weight: 500; text-decoration: none; border: none; cursor: pointer; transition: all 0.25s; display: inline-flex; align-items: center; gap: 0.5rem; }
+  .btn-blue:hover { background: var(--blue-hover); transform: scale(1.02); box-shadow: 0 6px 24px rgba(0,113,227,0.3); }
+  .btn-ghost { background: transparent; color: var(--blue); padding: 0.85rem 2.2rem; border-radius: 30px; font-size: 0.95rem; font-weight: 500; text-decoration: none; border: 1.5px solid var(--blue); cursor: pointer; transition: all 0.25s; }
+  .btn-ghost:hover { background: rgba(0,113,227,0.06); transform: scale(1.02); }
+  .stats-section { background: var(--light); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .stats-inner { max-width: 1000px; margin: 0 auto; padding: 4rem 2rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; text-align: center; }
+  .stat-num { font-size: 3rem; font-weight: 700; letter-spacing: -0.04em; color: var(--dark); display: block; line-height: 1; margin-bottom: 0.5rem; }
+  .stat-label { font-size: 0.85rem; color: var(--muted); font-weight: 400; }
+  .section-wrap { max-width: 1100px; margin: 0 auto; padding: 7rem 2rem; }
+  .section-eyebrow { font-size: 0.78rem; font-weight: 500; color: var(--blue); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 0.8rem; }
+  .section-title { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; color: var(--dark); margin-bottom: 1rem; }
+  .section-sub { font-size: 1.05rem; color: var(--muted); max-width: 520px; line-height: 1.7; font-weight: 300; margin-bottom: 4rem; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; background: var(--border); border: 1.5px solid var(--border); border-radius: 20px; overflow: hidden; }
+  .service-card { background: var(--white); padding: 2.8rem 2.2rem; transition: background 0.2s; }
+  .service-card:hover { background: var(--light); }
+  .service-icon { width: 52px; height: 52px; background: var(--light); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1.5rem; }
+  .service-name { font-size: 1.05rem; font-weight: 600; color: var(--dark); margin-bottom: 0.6rem; letter-spacing: -0.01em; }
+  .service-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.65; font-weight: 400; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .gallery-item { background: #e8e8ed; border-radius: 16px; overflow: hidden; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
+  .gallery-item:first-child { grid-column: span 2; aspect-ratio: 16/7; }
+  .gallery-item:nth-child(5) { grid-column: span 2; aspect-ratio: 16/7; }
+  .gallery-item:hover { transform: scale(1.01); box-shadow: 0 20px 60px rgba(0,0,0,0.12); }
+  .gallery-emoji { font-size: 3.5rem; opacity: 0.35; }
+  .gallery-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem 1.5rem 1.2rem; background: linear-gradient(to top, rgba(0,0,0,0.5), transparent); border-radius: 0 0 16px 16px; opacity: 0; transition: opacity 0.3s; }
+  .gallery-item:hover .gallery-label { opacity: 1; }
+  .gallery-title { font-size: 0.9rem; font-weight: 600; color: #fff; letter-spacing: -0.01em; }
+  .gallery-tag { font-size: 0.75rem; color: rgba(255,255,255,0.7); margin-top: 0.2rem; }
+  .prices-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; align-items: start; }
+  .price-card { border: 1.5px solid var(--border); border-radius: 20px; padding: 2.5rem 2rem; background: var(--white); transition: box-shadow 0.3s, transform 0.3s; position: relative; }
+  .price-card:hover { box-shadow: 0 20px 60px rgba(0,0,0,0.08); transform: translateY(-4px); }
+  .price-card.featured { border-color: var(--blue); background: #f0f7ff; }
+  .popular-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--blue); color: #fff; font-size: 0.7rem; font-weight: 600; padding: 0.3rem 1rem; border-radius: 20px; white-space: nowrap; letter-spacing: 0.02em; }
+  .price-plan { font-size: 0.8rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1.2rem; }
+  .price-num { font-size: 3rem; font-weight: 700; letter-spacing: -0.04em; color: var(--dark); line-height: 1; margin-bottom: 0.3rem; }
+  .price-num sup { font-size: 1.2rem; vertical-align: super; font-weight: 500; }
+  .price-desc { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.8rem; }
+  hr.divider { border: none; border-top: 1px solid var(--border); margin-bottom: 1.5rem; }
+  .price-features { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2rem; }
+  .price-features li { font-size: 0.9rem; color: var(--mid); display: flex; align-items: flex-start; gap: 0.7rem; line-height: 1.4; }
+  .price-features li::before { content: '✓'; color: var(--blue); font-weight: 700; font-size: 0.85rem; flex-shrink: 0; margin-top: 0.05rem; }
+  .price-cta { display: block; text-align: center; padding: 0.85rem; border-radius: 10px; font-size: 0.9rem; font-weight: 500; text-decoration: none; transition: all 0.2s; border: 1.5px solid var(--blue); color: var(--blue); background: transparent; cursor: pointer; width: 100%; font-family: inherit; }
+  .price-cta:hover { background: rgba(0,113,227,0.06); }
+  .price-cta.cta-solid { background: var(--blue); color: #fff; border-color: var(--blue); }
+  .price-cta.cta-solid:hover { background: var(--blue-hover); box-shadow: 0 6px 20px rgba(0,113,227,0.3); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+  .about-card { background: var(--white); border-radius: 24px; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 7rem; box-shadow: 0 30px 80px rgba(0,0,0,0.1); }
+  .about-text h3 { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700; letter-spacing: -0.03em; color: var(--dark); line-height: 1.2; margin-bottom: 1.5rem; }
+  .about-text p { font-size: 0.98rem; color: var(--muted); line-height: 1.8; margin-bottom: 1rem; font-weight: 400; }
+  .brand-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.8rem; }
+  .chip { background: var(--white); border: 1.5px solid var(--border); color: var(--mid); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 500; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .contact-row { display: flex; align-items: center; gap: 1.2rem; padding: 1.4rem 0; border-bottom: 1px solid var(--border); }
+  .contact-icon-box { width: 44px; height: 44px; background: var(--light); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+  .c-label { font-size: 0.75rem; color: var(--muted); font-weight: 500; margin-bottom: 0.2rem; }
+  .c-val { font-size: 0.98rem; color: var(--dark); font-weight: 500; }
+  .whatsapp-cta { display: inline-flex; align-items: center; gap: 0.7rem; background: var(--green); color: #fff; padding: 1rem 2rem; border-radius: 14px; font-size: 0.95rem; font-weight: 600; text-decoration: none; margin-top: 2rem; transition: all 0.25s; }
+  .whatsapp-cta:hover { background: #1fba59; transform: scale(1.02); box-shadow: 0 8px 24px rgba(37,211,102,0.35); }
+  .form-wrap { display: flex; flex-direction: column; gap: 1rem; }
+  .f-label { font-size: 0.78rem; font-weight: 500; color: var(--mid); margin-bottom: 0.4rem; letter-spacing: 0.02em; }
+  .f-input, .f-textarea { width: 100%; background: var(--light); border: 1.5px solid transparent; border-radius: 10px; padding: 0.9rem 1.1rem; font-size: 0.95rem; font-family: inherit; color: var(--dark); outline: none; transition: border-color 0.2s, background 0.2s; }
+  .f-input:focus, .f-textarea:focus { border-color: var(--blue); background: var(--white); }
+  .f-textarea { resize: vertical; min-height: 130px; }
+  .submit-btn { background: var(--blue); color: #fff; border: none; border-radius: 10px; padding: 1rem; font-size: 0.95rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.25s; }
+  .submit-btn:hover { background: var(--blue-hover); box-shadow: 0 6px 20px rgba(0,113,227,0.3); }
+  .cta-banner { background: var(--dark); padding: 6rem 2rem; text-align: center; }
+  .cta-banner h2 { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 700; letter-spacing: -0.04em; color: var(--white); margin-bottom: 1rem; }
+  .cta-banner p { font-size: 1.1rem; color: rgba(255,255,255,0.55); margin-bottom: 2.5rem; font-weight: 300; }
+  footer { background: var(--light); border-top: 1px solid var(--border); text-align: center; padding: 3rem 2rem; }
+  .footer-logo { font-size: 1.1rem; font-weight: 600; color: var(--dark); text-decoration: none; display: block; margin-bottom: 0.8rem; }
+  footer p { font-size: 0.82rem; color: var(--muted); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+  @media (max-width: 900px) {
+    nav ul { display: none; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-item:first-child, .gallery-item:nth-child(5) { grid-column: span 2; }
+    .prices-grid { grid-template-columns: 1fr; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .section-wrap { padding: 4rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#hero" class="logo">Compupamm</a>
+    <ul>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#galeria">Proyectos</a></li>
+      <li><a href="#precios">Precios</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#contacto" class="nav-btn">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="hero-eyebrow">Seguridad · Tecnología · Mantenimiento</div>
+  <h1 class="hero-title">Protege lo<br>que importa.<br><span>Compupamm</span></h1>
+  <p class="hero-sub">Expertos en area de TI ,Ciberseguridad, CCTV, controles de acceso, alarmas,Mantenimiento a equipo computo e instalaciones profesionales para tu hogar y negocio.</p>
+  <div class="hero-actions">
+    <a href="#servicios" class="btn-blue">Ver servicios</a>
+    <a href="https://wa.me/525530089518?text=Hola,%20me%20interesa%20cotizar" class="btn-ghost" target="_blank">Cotizar gratis</a>
+  </div>
+</section>
+
+<div class="stats-section">
+  <div class="stats-inner reveal">
+    <div><span class="stat-num">+150</span><div class="stat-label">Clientes satisfechos</div></div>
+    <div><span class="stat-num">+5</span><div class="stat-label">Años de experiencia</div></div>
+    <div><span class="stat-num">+300</span><div class="stat-label">Cámaras instaladas</div></div>
+    <div><span class="stat-num">24/7</span><div class="stat-label">Soporte técnico</div></div>
+  </div>
+</div>
+
+<div id="servicios">
+  <div class="section-wrap">
+    <div class="section-eyebrow reveal">Nuestros servicios</div>
+    <h2 class="section-title reveal">Todo lo que<br>necesitas.</h2>
+    <p class="section-sub reveal">Soluciones completas en seguridad electrónica y tecnología. Instalación profesional incluida.</p>
+    <div class="services-grid reveal">
+      <div class="service-card"><div class="service-icon">📹</div><div class="service-name">CCTV & Videovigilancia</div><p class="service-desc">Cámaras IP, analógicas y en la nube. Monitoreo en tiempo real desde tu celular, las 24 horas.</p></div>
+      <div class="service-card"><div class="service-icon">🚪</div><div class="service-name">Control de Acceso</div><p class="service-desc">Lectores biométricos, tarjetas RFID y teclados para empresas y residencias.</p></div>
+      <div class="service-card"><div class="service-icon">🚨</div><div class="service-name">Alarmas & Sensores</div><p class="service-desc">Sistemas de alarma perimetral, detectores de movimiento, humo, gas y temperatura.</p></div>
+      <div class="service-card"><div class="service-icon">💻</div><div class="service-name">Venta de Equipos</div><p class="service-desc">Computadoras, laptops y servidores armados a la medida de tus necesidades y presupuesto.</p></div>
+      <div class="service-card"><div class="service-icon">🌐</div><div class="service-name">Redes & Conectividad</div><p class="service-desc">Redes cableadas e inalámbricas, routers, switches y configuración de firewall.</p></div>
+      <div class="service-card"><div class="service-icon">🔧</div><div class="service-name">Soporte Técnico</div><p class="service-desc">Mantenimiento preventivo, reparación de equipos y soporte remoto cuando lo necesites.</p></div>
+    </div>
+  </div>
+</div>
+
+<div id="galeria" style="background: var(--light); border-top: 1px solid var(--border);">
+  <div class="section-wrap">
+    <div class="section-eyebrow reveal">Galería</div>
+    <h2 class="section-title reveal">Proyectos<br>realizados.</h2>
+    <p class="section-sub reveal">Cada instalación ejecutada con los más altos estándares de calidad.</p>
+    <div class="gallery-grid reveal">
+      <div class="gallery-item" style="background:#dde4ed;"><span class="gallery-emoji">📹</span><div class="gallery-label"><div class="gallery-title">Sistema CCTV Empresarial</div><div class="gallery-tag">16 Cámaras · Local Comercial</div></div></div>
+      <div class="gallery-item" style="background:#e0e8e0;"><span class="gallery-emoji">🚪</span><div class="gallery-label"><div class="gallery-title">Control de Acceso</div><div class="gallery-tag">Biométrico · Oficina</div></div></div>
+      <div class="gallery-item" style="background:#ebe0e0;"><span class="gallery-emoji">🚨</span><div class="gallery-label"><div class="gallery-title">Alarma Residencial</div><div class="gallery-tag">8 Zonas · Casa Habitación</div></div></div>
+      <div class="gallery-item" style="background:#e8e0eb;"><span class="gallery-emoji">💻</span><div class="gallery-label"><div class="gallery-title">PC y Servidores</div><div class="gallery-tag">Alto Rendimiento · Personalizado</div></div></div>
+      <div class="gallery-item" style="background:#dde4f0;"><span class="gallery-emoji">🌐</span><div class="gallery-label"><div class="gallery-title">Red Estructurada</div><div class="gallery-tag">Cableado · WiFi 6 · Empresa</div></div></div>
+      <div class="gallery-item" style="background:#e8eae0;"><span class="gallery-emoji">🔒</span><div class="gallery-label"><div class="gallery-title">Cerco Eléctrico</div><div class="gallery-tag">Seguridad Perimetral</div></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="precios">
+  <div class="section-wrap">
+    <div class="section-eyebrow reveal">Precios</div>
+    <h2 class="section-title reveal">Elige tu<br>plan ideal.</h2>
+    <p class="section-sub reveal">Todos los planes incluyen instalación profesional y garantía.</p>
+    <div class="prices-grid reveal">
+      <div class="price-card">
+        <div class="price-plan">Básico</div>
+        <div class="price-num"><sup>$</sup>3,500</div>
+        <div class="price-desc">MXN · instalación incluida</div>
+        <hr class="divider">
+        <ul class="price-features">
+          <li>4 Cámaras HD</li><li>DVR 4 canales</li><li>Disco duro 500 GB</li><li>App de monitoreo móvil</li><li>Garantía *</li>
+        </ul>
+        <a href="https://wa.me/525530089518?text=Plan%20Básico" class="price-cta" target="_blank">Cotizar este plan</a>
+      </div>
+      <div class="price-card featured">
+        <div class="popular-badge">⭐ Más popular</div>
+        <div class="price-plan">Profesional</div>
+        <div class="price-num"><sup>$</sup>8,500</div>
+        <div class="price-desc">MXN · instalación incluida</div>
+        <hr class="divider">
+        <ul class="price-features">
+          <li>8 Cámaras Full HD</li><li>NVR 8 canales</li><li>Disco duro 1 TB</li><li>Control de acceso x1</li><li>Alertas en tiempo real</li><li>Garantía *</li>
+        </ul>
+        <a href="https://wa.me/525530089518?text=Plan%20Profesional" class="price-cta cta-solid" target="_blank">Cotizar este plan</a>
+      </div>
+      <div class="price-card">
+        <div class="price-plan">Empresarial</div>
+        <div class="price-num" style="font-size:2rem;padding-top:.5rem">A medida</div>
+        <div class="price-desc">Cotización sin costo</div>
+        <hr class="divider">
+        <ul class="price-features">
+          <li>+16 Cámaras 4K</li><li>Controles de acceso múltiples</li><li>Alarma integrada</li><li>Red empresarial completa</li><li>Soporte prioritario 24/7</li><li>Garantía *</li>
+        </ul>
+        <a href="https://wa.me/525530089518?text=Plan%20Empresarial" class="price-cta" target="_blank">Solicitar cotización</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="nosotros" style="background:var(--light);border-top:1px solid var(--border)">
+  <div class="section-wrap">
+    <div class="about-grid reveal">
+      <div><div class="about-card">🛡️</div></div>
+      <div class="about-text">
+        <div class="section-eyebrow">Sobre nosotros</div>
+        <h3>Tu socio de confianza en tecnología y seguridad.</h3>
+        <p>Somos una empresa especializada en seguridad electrónica con años de experiencia protegiendo hogares y negocios en la región.</p>
+        <p>Nos comprometemos a ofrecer equipos de alta calidad con instalación profesional, garantía extendida y soporte técnico continuo.</p>
+        <p>Trabajamos con las mejores marcas del mercado para garantizar durabilidad y rendimiento.</p>
+        <div class="brand-chips">
+          <span class="chip">Hikvision</span><span class="chip">Dahua</span><span class="chip">ZKTeco</span><span class="chip">Honeywell</span><span class="chip">D-Link</span><span class="chip">Cisco</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="contacto">
+  <div class="section-wrap">
+    <div class="section-eyebrow reveal">Contacto</div>
+    <h2 class="section-title reveal">Hablemos<br>de tu proyecto.</h2>
+    <p class="section-sub reveal">Cotización sin costo. Respuesta en menos de 2 horas.</p>
+    <div class="contact-grid reveal">
+      <div>
+        <div class="contact-row"><div class="contact-icon-box">📱</div><div><div class="c-label">WhatsApp / Teléfono</div><div class="c-val">+52 (55)30089518</div></div></div>
+        <div class="contact-row"><div class="contact-icon-box">📧</div><div><div class="c-label">Correo electrónico</div><div class="c-val">compupam00@gmail.com</div></div></div>
+        <div class="contact-row"><div class="contact-icon-box">📍</div><div><div class="c-label">Ubicación</div><div class="c-val">México · Servicio a domicilio</div></div></div>
+        <div class="contact-row"><div class="contact-icon-box">🕐</div><div><div class="c-label">Horario</div><div class="c-val">Lun – Sáb: 9am – 7pm</div></div></div>
+        <a href="https://wa.me/525530089518?text=Hola,%20quiero%20cotizar" class="whatsapp-cta" target="_blank">💬 Escríbenos por WhatsApp</a>
+      </div>
+      <div class="form-wrap">
+        <div><div class="f-label">Nombre completo</div><input type="text" class="f-input" placeholder="Tu nombre"></div>
+        <div><div class="f-label">Teléfono</div><input type="tel" class="f-input" placeholder="+52 553 0008 9518"></div>
+        <div><div class="f-label">Servicio de interés</div><input type="text" class="f-input" placeholder="CCTV, Alarma, Control de acceso..."></div>
+        <div><div class="f-label">Mensaje</div><textarea class="f-textarea" placeholder="Cuéntanos sobre tu proyecto..."></textarea></div>
+        <button class="submit-btn" onclick="sendWhatsApp()">Enviar por WhatsApp →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cta-banner">
+  <h2>¿Listo para<br>proteger lo tuyo?</h2>
+  <p>Contacta ahora y recibe una cotización personalizada sin costo.</p>
+  <a href="https://wa.me/525530089518?text=Quiero%20una%20cotizacion" class="btn-blue" target="_blank">Cotizar gratis</a>
+</div>
+
+<footer>
+  <a href="#hero" class="footer-logo">Compupamm</a>
+  <p>© 2025 Compupamm — Seguridad & Tecnología · Todos los derechos reservados</p>
+</footer>
+
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  function sendWhatsApp() {
+    const inputs = document.querySelectorAll('.f-input');
+    const textarea = document.querySelector('.f-textarea');
+    const text = `Hola! Soy ${inputs[0].value||'Sin nombre'}. Tel: ${inputs[1].value||'N/A'}. Servicio: ${inputs[2].value||'N/A'}. ${textarea.value}`;
+    window.open(`https://wa.me/525530089518?text=${encodeURIComponent(text)}`, '_blank');
+  }
+</script>
+</body>
+</html>
